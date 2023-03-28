@@ -16,13 +16,13 @@ export const Product = (props) => {
   return (
     <div className="product">
       <div className="image">
-        <img src={thumbnail} />
+        <img src={thumbnail} alt='thumbnail' />
       </div>
       <div className="description">
         <div className="title">
           <b>{title}</b>
         </div>
-        <div className="price">${price}</div>
+        <div className="price">£{price}</div>
       </div>
       {quantity === 0 ? (
         <button

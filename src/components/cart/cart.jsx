@@ -26,7 +26,7 @@ export const Cart = () => {
       setselectedCartItems(result1);
     };
     getCartItems();
-  }, []);
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
@@ -41,11 +41,12 @@ export const Cart = () => {
             borderRadius: "10px",
             padding: "15px",
           }}
-        >
-          {selectedCartItems.map((product, index) => {
-            if (product.quantity !== 0) {
+        > 
+        {/* eslint-disable-next-line  */}
+          {selectedCartItems.map((product) => {
+            if (product.quantity !== 0) 
               return <CartItem data={product} key={product.id} />;
-            }
+            
           })}
         </Box>
       ) : (

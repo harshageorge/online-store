@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import "./cart.css";
 import { ShopContext } from "../../context/shop-context";
 import { CounterButton } from "../../styles/counterButton";
@@ -7,14 +7,13 @@ export const CartItem = (props) => {
   const { id, title, price, thumbnail } = props.data;
   const {
     increaseCartQuantity,
-    cartItems,
     decreaseCartQuantity,
     getProductQuantity,
   } = useContext(ShopContext);
   const quantity = getProductQuantity(id);
   return (
     <div className="items-info">
-      <img src={thumbnail} />
+      <img src={thumbnail} alt='thumbnail'/>
       <div className="productTitle">
         <b>{title}</b>
       </div>

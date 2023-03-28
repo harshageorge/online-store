@@ -1,4 +1,3 @@
-import { Box, Container } from "@mui/material";
 import React from "react";
 import { Navbar } from "../../components/navbar/navbar";
 import { Shop } from "../../components/shop/shop";

@@ -25,7 +25,7 @@ export const ShopContextProvider = (props) => {
   const [selectedCartItems, setselectedCartItems] = useState([]);
 
   const [cartItems, setCartItems] = useState(() => {
-    return JSON.parse(localStorage.getItem("MyCartItems"));
+    return JSON.parse(localStorage.getItem("MyCartItems")) || [];
   });
 
   useEffect(() => {
@@ -47,31 +47,27 @@ export const ShopContextProvider = (props) => {
     );
   };
   const getProductQuantity = (id) => {
-    return cartItems.find((product) => product.id === id)?.quantity || 0; // eslint-disable-line
+    return cartItems?.find((product) => product.id === id)?.quantity || 0; // eslint-disable-line
   };
 
   const increaseCartQuantity = (id) => {
-    setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id) == null) {
+    const exist = cartItems?.find((item)=>item.id===id);
+    if(exist){
+      setCartItems(cartItems.map((x)=>x.id===id?{...exist,quantity: x.quantity + 1 }:x))
+    }else{
+      setCartItems((currItems) => {
+        console.log(currItems);
         return [...currItems, { id, quantity: 1 }];
-      } else {
-        return currItems.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity + 1 };
-          } else {
-            return item;
-          }
-        });
-      }
-    });
+      })
+    }
   };
   const decreaseCartQuantity = (id) => {
     setCartItems((currItems) => {
-      if (currItems.find((item) => item.id === id)?.quantity === 1) {
+      if (currItems?.find((item) => item.id === id)?.quantity === 1) {
         deleteSelectedCartItems(id);
-        return currItems.filter((item) => item.id !== id);
+        return currItems?.filter((item) => item.id !== id);
       } else {
-        return currItems.map((item) => {
+        return currItems?.map((item) => {
           if (item.id === id) {
             return { ...item, quantity: item.quantity - 1 };
           } else {
@@ -83,7 +79,7 @@ export const ShopContextProvider = (props) => {
   };
   const getTotalCartAmount = () => {
     let totalAmount = 0;
-    cartItems.forEach(item => { // eslint-disable-line
+    cartItems?.forEach(item => { // eslint-disable-line
       let itemInfo = allProductData.find((product) => product.id === item.id);
         totalAmount += item.quantity * itemInfo.price;
     });
@@ -95,7 +91,7 @@ export const ShopContextProvider = (props) => {
   };
   const getTotalCartItem = () => {
     let totalItem = 0;
-    cartItems.forEach(item=>{ // eslint-disable-line
+    cartItems?.forEach(item=>{ // eslint-disable-line
       totalItem = item.quantity + totalItem;
     });
     // cartItems.map((item) => {
